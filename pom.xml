@@ -166,6 +166,7 @@
 								<reactive>true</reactive>
 								<interfaceOnly>true</interfaceOnly>
 								<skipDefaultInterface>true</skipDefaultInterface>
+								<useResponseEntity>false</useResponseEntity>
 							</configOptions>
 							<output>${project.build.directory}/generated-sources/openapi</output>
 						</configuration>

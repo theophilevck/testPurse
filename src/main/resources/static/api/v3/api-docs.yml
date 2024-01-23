@@ -21,6 +21,11 @@ paths:
       responses:
         200:
           description: save transaction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: { }
         400:
           content:
             application/json:
@@ -111,38 +116,31 @@ components:
       type: object
       description: SaveTransactionRequest
       required:
-        - transaction
         - amount
         - payment_type
         - status
       properties:
-        transaction:
-          type: string
-          format: string
-          example: "transaction"
         amount:
-          type: string
-          format: string
+          type: number
+          format: float
           example: "amount"
         payment_type:
-          type: string
-          format: string
-          example: "payment_type"
+          $ref: '#/components/schemas/PaymentTypeEnum'
         status:
-          type: string
-          format: string
-          example: "status"
+          $ref: '#/components/schemas/StatusTypeEnum'
 
     RetrieveTransactionRequest:
       type: object
       description: RetrieveTransactionRequest
       required:
-        - transaction
+        - transactionId
       properties:
-        transaction:
+        transactionId:
           type: string
-          format: string
-          example: "transaction"
+          description: The unique identifier of the transaction to retrieve
+          example: "transactionId"
+
+
 
     RetrieveTransactionResponse:
       type: object
@@ -153,17 +151,13 @@ components:
           format: string
           example: "transaction_id"
         amount:
-          type: string
-          format: string
+          type: number
+          format: float
           example: "amount"
         payment_type:
-          type: string
-          format: string
-          example: "payment_type"
+          $ref: '#/components/schemas/PaymentTypeEnum'
         status:
-          type: string
-          format: string
-          example: "status"
+          $ref: '#/components/schemas/StatusTypeEnum'
 
 
     UpdateTransactionRequest:
@@ -180,17 +174,13 @@ components:
           format: string
           example: "transaction_id"
         amount:
-          type: string
-          format: string
+          type: number
+          format: float
           example: "amount"
         payment_type:
-          type: string
-          format: string
-          example: "payment_type"
+          $ref: '#/components/schemas/PaymentTypeEnum'
         status:
-          type: string
-          format: string
-          example: "status"
+          $ref: '#/components/schemas/StatusTypeEnum'
 
     UpdateTransactionResponse:
       type: object
@@ -201,17 +191,22 @@ components:
           format: string
           example: "transaction_id"
         amount:
-          type: string
-          format: string
+          type: number
+          format: float
           example: "amount"
         payment_type:
-          type: string
-          format: string
-          example: "payment_type"
+          $ref: '#/components/schemas/PaymentTypeEnum'
         status:
-          type: string
-          format: string
-          example: "status"
+          $ref: '#/components/schemas/StatusTypeEnum'
+
+    StatusTypeEnum:
+      type: string
+      enum: [  IN_PROGRESS, CAPTURED , AUTHORIZED]
+
+
+    PaymentTypeEnum:
+      type: string
+      enum: [  CREDIT_CARD, PAYPAL , GIFT_CARD]
 
     ErrorResponse:
       title: Error

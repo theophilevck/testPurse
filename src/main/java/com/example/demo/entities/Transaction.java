@@ -35,7 +35,8 @@ public class Transaction {
 
     private BigDecimal amount;
 
-    private String payment_type;
+    @Enumerated(EnumType.STRING)
+    private PaymentTypeEnum paymentType;
 
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
