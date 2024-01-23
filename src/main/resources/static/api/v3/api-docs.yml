@@ -1,0 +1,238 @@
+"openapi": "3.0.1"
+"info":
+  "title": Example API
+  version: "@project.version@"
+servers:
+  - description: Local
+    url: "/"
+paths:
+  /api/v1/transaction/save:
+    post:
+      tags:
+        - transaction
+      summary: "DEMO-1-1 save transaction"
+      operationId: "DEMO-1-1"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveTransactionRequest"
+        required: true
+      responses:
+        200:
+          description: save transaction
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: invalid input, object invalid
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: not found
+
+
+
+  /api/v1/transaction/retrieve:
+    post:
+      tags:
+        - transaction
+      summary: "DEMO-1-2 retrieve transaction"
+      operationId: "DEMO-1-2"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RetrieveTransactionRequest"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveTransactionResponse"
+          description: retrieve transaction
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: invalid input, object invalid
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: not found
+
+
+
+  /api/v1/transaction/update:
+    post:
+      tags:
+        - transaction
+      summary: "DEMO-1-3 update transaction"
+      operationId: "DEMO-1-3"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTransactionRequest"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateTransactionResponse"
+          description: update transaction
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: invalid input, object invalid
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: not found
+
+
+components:
+
+  schemas:
+
+    SaveTransactionRequest:
+      type: object
+      description: SaveTransactionRequest
+      required:
+        - transaction
+        - amount
+        - payment_type
+        - status
+      properties:
+        transaction:
+          type: string
+          format: string
+          example: "transaction"
+        amount:
+          type: string
+          format: string
+          example: "amount"
+        payment_type:
+          type: string
+          format: string
+          example: "payment_type"
+        status:
+          type: string
+          format: string
+          example: "status"
+
+    RetrieveTransactionRequest:
+      type: object
+      description: RetrieveTransactionRequest
+      required:
+        - transaction
+      properties:
+        transaction:
+          type: string
+          format: string
+          example: "transaction"
+
+    RetrieveTransactionResponse:
+      type: object
+      description: RetrieveTransactionResponse
+      properties:
+        transaction_id:
+          type: string
+          format: string
+          example: "transaction_id"
+        amount:
+          type: string
+          format: string
+          example: "amount"
+        payment_type:
+          type: string
+          format: string
+          example: "payment_type"
+        status:
+          type: string
+          format: string
+          example: "status"
+
+
+    UpdateTransactionRequest:
+      type: object
+      description: UpdateTransactionRequest
+      required:
+        - transaction_id
+        - amount
+        - payment_type
+        - status
+      properties:
+        transaction_id:
+          type: string
+          format: string
+          example: "transaction_id"
+        amount:
+          type: string
+          format: string
+          example: "amount"
+        payment_type:
+          type: string
+          format: string
+          example: "payment_type"
+        status:
+          type: string
+          format: string
+          example: "status"
+
+    UpdateTransactionResponse:
+      type: object
+      description: UpdateTransactionResponse
+      properties:
+        transaction_id:
+          type: string
+          format: string
+          example: "transaction_id"
+        amount:
+          type: string
+          format: string
+          example: "amount"
+        payment_type:
+          type: string
+          format: string
+          example: "payment_type"
+        status:
+          type: string
+          format: string
+          example: "status"
+
+    ErrorResponse:
+      title: Error
+      description: Common errors definition
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: "#/components/schemas/Error"
+
+
+
+    Error:
+      type: object
+      description: Error object
+      properties:
+        code:
+          type: string
+          description: Error code
+          example: UNHANDLED
+        message:
+          type: string
+          description: Error message
+          example: Serious system error, please contact your local authorities

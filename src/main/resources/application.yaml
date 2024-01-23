@@ -1,0 +1,38 @@
+build.version: @project.version@
+
+server:
+  port: ${PORT:8080}
+
+
+servlet:
+  session:
+    timeout: 15m
+
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: @project.name@
+  liquibase:
+    change-log: classpath:liquibase/db.changelog-master.xml
+  jpa:
+    # Provide database platform that is being used
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        query:
+          fail_on_pagination_over_collection_fetch: true
+        jdbc:
+          batch_size: 10
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+        types:
+          print:
+            banner: false
+    open-in-view: false
+    # Show sql when spring data jpa performs query
+    show-sql: true
+
