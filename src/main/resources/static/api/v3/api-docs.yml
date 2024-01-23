@@ -119,6 +119,7 @@ components:
         - amount
         - payment_type
         - status
+        - orders
       properties:
         amount:
           type: number
@@ -128,6 +129,11 @@ components:
           $ref: '#/components/schemas/PaymentTypeEnum'
         status:
           $ref: '#/components/schemas/StatusTypeEnum'
+        orders:
+          type: array
+          items:
+              $ref: '#/components/schemas/OrderLines'
+          description: orders
 
     RetrieveTransactionRequest:
       type: object
@@ -168,6 +174,7 @@ components:
         - amount
         - payment_type
         - status
+        - orders
       properties:
         transaction_id:
           type: string
@@ -181,6 +188,11 @@ components:
           $ref: '#/components/schemas/PaymentTypeEnum'
         status:
           $ref: '#/components/schemas/StatusTypeEnum'
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLines'
+          description: orders
 
     UpdateTransactionResponse:
       type: object
@@ -198,6 +210,39 @@ components:
           $ref: '#/components/schemas/PaymentTypeEnum'
         status:
           $ref: '#/components/schemas/StatusTypeEnum'
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLines'
+          description: orders
+
+
+    OrderLines:
+        type: object
+        description: OrderLines
+        required:
+            - productName
+            - productReference
+            - quantity
+            - price
+        properties:
+          productName:
+            type: string
+            format: string
+            example: "productName"
+          productReference:
+            type: string
+            format: string
+            example: "productReference"
+          quantity:
+            type: number
+            format: float
+            example: "quantity"
+          price:
+            type: number
+            format: float
+            example: "price"
+
 
     StatusTypeEnum:
       type: string
