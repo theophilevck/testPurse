@@ -132,7 +132,7 @@ components:
         orders:
           type: array
           items:
-              $ref: '#/components/schemas/OrderLines'
+            $ref: '#/components/schemas/OrderLines'
           description: orders
 
     RetrieveTransactionRequest:
@@ -164,6 +164,11 @@ components:
           $ref: '#/components/schemas/PaymentTypeEnum'
         status:
           $ref: '#/components/schemas/StatusTypeEnum'
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLines'
+          description: orders
 
 
     UpdateTransactionRequest:
@@ -218,40 +223,40 @@ components:
 
 
     OrderLines:
-        type: object
-        description: OrderLines
-        required:
-            - productName
-            - productReference
-            - quantity
-            - price
-        properties:
-          productName:
-            type: string
-            format: string
-            example: "productName"
-          productReference:
-            type: string
-            format: string
-            example: "productReference"
-          quantity:
-            type: number
-            format: float
-            example: "quantity"
-          price:
-            type: number
-            format: float
-            example: "price"
+      type: object
+      description: OrderLines
+      required:
+        - productName
+        - productReference
+        - quantity
+        - price
+      properties:
+        productName:
+          type: string
+          format: string
+          example: "productName"
+        productReference:
+          type: string
+          format: string
+          example: "productReference"
+        quantity:
+          type: number
+          format: float
+          example: "quantity"
+        price:
+          type: number
+          format: float
+          example: "price"
 
 
     StatusTypeEnum:
       type: string
-      enum: [  IN_PROGRESS, CAPTURED , AUTHORIZED]
+      enum: [ IN_PROGRESS, CAPTURED , AUTHORIZED ]
 
 
     PaymentTypeEnum:
       type: string
-      enum: [  CREDIT_CARD, PAYPAL , GIFT_CARD]
+      enum: [ CREDIT_CARD, PAYPAL , GIFT_CARD ]
 
     ErrorResponse:
       title: Error
