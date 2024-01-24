@@ -4,6 +4,7 @@ import com.example.demo.dto.RetrieveTransactionResponseDto;
 import com.example.demo.dto.SaveTransactionRequestDto;
 import com.example.demo.dto.UpdateTransactionRequestDto;
 import com.example.demo.dto.UpdateTransactionResponseDto;
+import com.example.demo.entities.StatusEnum;
 import com.example.demo.entities.Transaction;
 import com.example.demo.web.mapper.OrderLine.OrderLineMapper;
 import com.example.demo.web.mapper.PaymentTypeEnumMapper;
@@ -27,7 +28,7 @@ public class TransactionMapper {
         Transaction transaction = new Transaction();
         transaction.setAmount(BigDecimal.valueOf(saveTransactionRequestDto.getAmount()));
         transaction.setPaymentType(paymentTypeEnumMapper.fromPaymentTypeEnumDtoToPaymentTypeEnum(saveTransactionRequestDto.getPaymentType()));
-        transaction.setStatus(statusTypeEnumMapper.fromStatusTypeEnumDtoToStatusTypeEnum(saveTransactionRequestDto.getStatus()));
+        transaction.setStatus(StatusEnum.IN_PROGRESS);
         transaction.setOrders(orderLineMapper.fromOrderLinesDtoToOrderLine(saveTransactionRequestDto.getOrders()));
         return transaction;
     }

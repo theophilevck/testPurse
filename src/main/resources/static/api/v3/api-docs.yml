@@ -108,6 +108,65 @@ paths:
           description: not found
 
 
+
+  /api/v1/orderLine/retrieve:
+    post:
+      tags:
+        - orderLine
+      summary: "DEMO-2-1 retrieve orderLine"
+      operationId: "DEMO-2-1"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RetrieveOrderLineRequest"
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveOrderLineResponse"
+          description: update transaction
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: invalid input, object invalid
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: not found
+
+  /api/v1/orderLine/retrieveAll:
+    get:
+      tags:
+        - orderLine
+      summary: "DEMO-2-2 retrieve all orderLine"
+      operationId: "DEMO-2-2"
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RetrieveOrderLinesResponse"
+          description: update transaction
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: invalid input, object invalid
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: not found
+
 components:
 
   schemas:
@@ -118,7 +177,6 @@ components:
       required:
         - amount
         - payment_type
-        - status
         - orders
       properties:
         amount:
@@ -127,8 +185,6 @@ components:
           example: "amount"
         payment_type:
           $ref: '#/components/schemas/PaymentTypeEnum'
-        status:
-          $ref: '#/components/schemas/StatusTypeEnum'
         orders:
           type: array
           items:
@@ -258,6 +314,62 @@ components:
       type: string
       enum: [ CREDIT_CARD, PAYPAL , GIFT_CARD ]
 
+
+
+
+
+
+
+
+
+    RetrieveOrderLineRequest:
+      type: object
+      description: RetrieveOrderLineRequest
+      required:
+        - orderLineId
+      properties:
+        orderLineId:
+          type: string
+          description: The unique identifier of the order line to retrieve
+          example: "orderLineId"
+
+
+    RetrieveOrderLineResponse:
+      type: object
+      description: OrderLines
+      required:
+        - productName
+        - productReference
+        - quantity
+        - price
+      properties:
+        productName:
+          type: string
+          format: string
+          example: "productName"
+        productReference:
+          type: string
+          format: string
+          example: "productReference"
+        quantity:
+          type: number
+          format: float
+          example: "quantity"
+        price:
+          type: number
+          format: float
+          example: "price"
+
+    RetrieveOrderLinesResponse:
+      required:
+        - orderLines
+      properties:
+        orderLines:
+          type: array
+          items:
+            $ref: '#/components/schemas/RetrieveOrderLineResponse'
+
+
     ErrorResponse:
       title: Error
       description: Common errors definition
@@ -266,7 +378,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Error"
-
 
 
     Error:

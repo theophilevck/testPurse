@@ -36,3 +36,9 @@ spring:
     # Show sql when spring data jpa performs query
     show-sql: true
 
+springdoc:
+  api-docs:
+    path: /v3/swagger-ui.html
+  swagger-ui:
+    path: /v3/api-docs
+

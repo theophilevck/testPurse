@@ -31,3 +31,5 @@ environment:
 - POSTGRES_DB=postgres
 Database migrations rollout
 The application uses Liquibase for applying DB migrations which happens during the startup.
+
+http://localhost:8080/webjars/swagger-ui/index.html

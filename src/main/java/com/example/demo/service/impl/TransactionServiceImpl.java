@@ -64,7 +64,8 @@ public class TransactionServiceImpl implements TransactionService {
         if (newStatus == StatusTypeEnumDto.CAPTURED && currentStatus != StatusEnum.AUTHORIZED) {
             throw new IllegalArgumentException("It's not possible to change the transaction status to 'CAPTURED' if the transaction is not in the 'AUTHORIZED' state");
         }
-
-
     }
+
+
+
 }
