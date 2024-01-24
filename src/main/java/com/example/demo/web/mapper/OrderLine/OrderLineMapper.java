@@ -5,6 +5,7 @@ import com.example.demo.dto.OrderLineResponseDto;
 import com.example.demo.entities.OrderLine;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class OrderLineMapper {
         orderLine.setId(orderLineDto.getId());
         orderLine.setProductName(orderLineDto.getProductName());
         orderLine.setProductReference(orderLineDto.getProductReference());
-        orderLine.setQuantity(orderLineDto.getQuantity());
+        orderLine.setQuantity(orderLineDto.getQuantity().intValue());
         orderLine.setPrice(orderLineDto.getPrice());
         return orderLine;
     }
@@ -34,7 +35,7 @@ public class OrderLineMapper {
         OrderLineResponseDto orderLineResponseDto = new OrderLineResponseDto();
         orderLineResponseDto.setProductName(orderLine.getProductName());
         orderLineResponseDto.setProductReference(orderLine.getProductReference());
-        orderLineResponseDto.setQuantity(orderLine.getQuantity());
+        orderLineResponseDto.setQuantity(BigDecimal.valueOf(orderLine.getQuantity()));
         orderLineResponseDto.setPrice(orderLine.getPrice());
         return orderLineResponseDto;
     }

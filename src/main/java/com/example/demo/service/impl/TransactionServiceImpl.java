@@ -30,7 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Mono<TransactionResponseDto> retrieveTransaction(String TransactionId) {
-        return Mono.justOrEmpty(transactionRepository.findById(Long.valueOf(TransactionId)))
+        return transactionRepository.findById(Long.valueOf(TransactionId))
                 .map(transactionMapper::fromTransactionToTransactionResultDto)
                 .doOnError(throwable -> Mono.error(new RuntimeException("Transaction not found")));
     }

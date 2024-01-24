@@ -1,10 +1,10 @@
 package com.example.demo.repository;
 
 import com.example.demo.entities.OrderLine;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrderLineRepository extends JpaRepository<OrderLine, Long> {
+public interface OrderLineRepository extends ReactiveCrudRepository<OrderLine, Long> {
 
 }

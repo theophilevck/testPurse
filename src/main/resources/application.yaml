@@ -1,44 +1,17 @@
-build.version: @project.version@
-
 server:
-  port: ${PORT:8080}
-
-
-servlet:
-  session:
-    timeout: 15m
-
-
-spring:
-  main:
-    allow-bean-definition-overriding: true
-  application:
-    name: @project.name@
-  liquibase:
-    change-log: classpath:liquibase/db.changelog-master.xml
-  jpa:
-    # Provide database platform that is being used
-    database-platform: org.hibernate.dialect.H2Dialect
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
-        query:
-          fail_on_pagination_over_collection_fetch: true
-        jdbc:
-          batch_size: 10
-          batch_versioned_data: true
-        order_inserts: true
-        order_updates: true
-        types:
-          print:
-            banner: false
-    open-in-view: false
-    # Show sql when spring data jpa performs query
-    show-sql: true
-
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+  http2:
+    enabled: true
+  port: 8080
+  forward-headers-strategy: framework
 springdoc:
+  version: '@springdoc.version@'
   api-docs:
-    path: /v3/swagger-ui.html
+    version: openapi_3_1
   swagger-ui:
-    path: /v3/api-docs
-
+    use-root-path: true

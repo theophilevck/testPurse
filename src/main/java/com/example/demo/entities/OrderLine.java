@@ -1,44 +1,36 @@
 package com.example.demo.entities;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "order_line")
 @Getter
 @Setter
+@Table("order_line")
 public class OrderLine {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_line_id_seq")
-    @SequenceGenerator(name = "order_line_id_seq", sequenceName = "order_line_id_seq", allocationSize = 1)
-    @Column(name = "id")
+    @Column("id")
     private Long id;
 
+    @Column("product_name")
     private String productName;
 
+    @Column("product_reference")
     private String productReference;
 
-    private BigDecimal quantity;
+    @Column("quantity")
+    private int quantity;
 
+    @Column("price")
     private BigDecimal price;
-
-    @ManyToOne
-    private Transaction transaction;
 }
