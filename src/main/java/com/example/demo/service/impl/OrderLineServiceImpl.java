@@ -1,22 +1,14 @@
 package com.example.demo.service.impl;
 
 
-import com.example.demo.dto.RetrieveOrderLineRequestDto;
-import com.example.demo.dto.RetrieveOrderLineResponseDto;
-import com.example.demo.dto.RetrieveOrderLinesResponseDto;
-import com.example.demo.repository.OrderLineRepository;
-import com.example.demo.service.OrderLineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
-public class OrderLineServiceImpl implements OrderLineService {
+public class OrderLineServiceImpl {
 
-
+/*
     private final OrderLineRepository orderLineRepository;
 
 
@@ -37,4 +29,6 @@ public class OrderLineServiceImpl implements OrderLineService {
                 .collect(Collectors.toList());
         return new RetrieveOrderLinesResponseDto(orderLineResponseDtoList);
     }
+
+ */
 }

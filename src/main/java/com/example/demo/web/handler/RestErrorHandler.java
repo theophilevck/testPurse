@@ -147,7 +147,7 @@ public class RestErrorHandler extends ResponseEntityExceptionHandler {
 
     private ErrorResponseDto buildErrorResponse(final ErrorCode errorCode, final Object... args) {
         return new ErrorResponseDto().addErrorsItem(
-                new ErrorDto().code(errorCode.name()).message(buildMessage(errorCode.name(), args)));
+                new ErrorDto().setCode(errorCode.name()).setMessage(buildMessage(errorCode.name(), args)));
     }
 
     private ErrorCode getErrorCodeByConstraint(final String constraint) {

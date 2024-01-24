@@ -1,32 +1,45 @@
 package com.example.demo.web.controller;
 
-import com.example.demo.dto.RetrieveTransactionRequestDto;
-import com.example.demo.dto.RetrieveTransactionResponseDto;
-import com.example.demo.dto.SaveTransactionRequestDto;
-import com.example.demo.dto.UpdateTransactionRequestDto;
-import com.example.demo.dto.UpdateTransactionResponseDto;
+
+import com.example.demo.dto.TransactionDto;
+import com.example.demo.dto.TransactionResponseDto;
+import com.example.demo.service.TransactionService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+@Validated
+@RequestMapping("/Transaction")
 @RestController
 @RequiredArgsConstructor
-public class TransactionController implements TransactionApi {
+public class TransactionController {
+
+    private final TransactionService transactionService;
 
 
-    @Override
-    public Mono<Object> dEMO11(Mono<SaveTransactionRequestDto> saveTransactionRequestDto, ServerWebExchange exchange) {
-        return null;
+    @PostMapping("/save")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "create Transaction")})
+    public Mono<Void> createTransaction(@Valid @RequestBody TransactionDto transactionDTO) {
+        return transactionService.createTransaction(transactionDTO);
     }
 
-    @Override
-    public Mono<RetrieveTransactionResponseDto> dEMO12(Mono<RetrieveTransactionRequestDto> retrieveTransactionRequestDto, ServerWebExchange exchange) {
-        return null;
+    @PostMapping("/update")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "update Transaction")})
+    public Mono<TransactionResponseDto> updateTransaction(TransactionDto updateTransactionRequestDto, ServerWebExchange exchange) {
+        return transactionService.updateTransaction(updateTransactionRequestDto);
     }
 
-    @Override
-    public Mono<UpdateTransactionResponseDto> dEMO13(Mono<UpdateTransactionRequestDto> updateTransactionRequestDto, ServerWebExchange exchange) {
-        return null;
+    @PostMapping("/retrieve")
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "retrieve Transaction")})
+    public Mono<TransactionResponseDto> retrieveTransaction(@Valid @RequestBody String transactionId) {
+        return transactionService.retrieveTransaction(transactionId);
     }
 }

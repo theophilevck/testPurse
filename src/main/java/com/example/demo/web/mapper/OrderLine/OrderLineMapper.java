@@ -1,10 +1,10 @@
 package com.example.demo.web.mapper.OrderLine;
 
-import com.example.demo.dto.OrderLinesDto;
+import com.example.demo.dto.OrderLineDto;
+import com.example.demo.dto.OrderLineResponseDto;
 import com.example.demo.entities.OrderLine;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,39 +12,40 @@ import java.util.List;
 @Component
 public class OrderLineMapper {
 
-    public OrderLine fromOrderLinesDtoToOrderLine(OrderLinesDto orderLinesDto) {
+    public OrderLine fromOrderLineDtoToOrderLine(OrderLineDto orderLineDto) {
         OrderLine orderLine = new OrderLine();
-        orderLine.setProductName(orderLinesDto.getProductName());
-        orderLine.setProductReference(orderLinesDto.getProductReference());
-        orderLine.setQuantity(BigDecimal.valueOf(orderLinesDto.getQuantity()));
-        orderLine.setPrice(BigDecimal.valueOf(orderLinesDto.getPrice()));
+        orderLine.setId(orderLineDto.getId());
+        orderLine.setProductName(orderLineDto.getProductName());
+        orderLine.setProductReference(orderLineDto.getProductReference());
+        orderLine.setQuantity(orderLineDto.getQuantity());
+        orderLine.setPrice(orderLineDto.getPrice());
         return orderLine;
     }
 
-    public List<OrderLine> fromOrderLinesDtoToOrderLine(List<OrderLinesDto> orderLinesDto) {
-        List<OrderLine> orderLine = new ArrayList<>();
-        for (OrderLinesDto orderLines : orderLinesDto) {
-            orderLine.add(fromOrderLinesDtoToOrderLine(orderLines));
+    public List<OrderLine> fromOrderLineDtoToOrderLines(List<OrderLineDto> orderLinesDto) {
+        List<OrderLine> result = new ArrayList<>();
+        for (OrderLineDto orderLines : orderLinesDto) {
+            result.add(fromOrderLineDtoToOrderLine(orderLines));
         }
-        return orderLine;
+        return result;
     }
 
-
-
-    public OrderLinesDto fromOrderLineToOrderLinesDto(OrderLine orderLine) {
-        OrderLinesDto orderLinesDto = new OrderLinesDto();
-        orderLinesDto.setProductName(orderLine.getProductName());
-        orderLinesDto.setProductReference(orderLine.getProductReference());
-        orderLinesDto.setQuantity(orderLine.getQuantity().floatValue());
-        orderLinesDto.setPrice(orderLine.getPrice().floatValue());
-        return orderLinesDto;
+    public OrderLineResponseDto fromOrderLineToOrderLineResponseDto(OrderLine orderLine) {
+        OrderLineResponseDto orderLineResponseDto = new OrderLineResponseDto();
+        orderLineResponseDto.setProductName(orderLine.getProductName());
+        orderLineResponseDto.setProductReference(orderLine.getProductReference());
+        orderLineResponseDto.setQuantity(orderLine.getQuantity());
+        orderLineResponseDto.setPrice(orderLine.getPrice());
+        return orderLineResponseDto;
     }
 
-    public List<OrderLinesDto> fromOrderLineToOrderLinesDto(List<OrderLine> orderLine) {
-        List<OrderLinesDto> orderLinesDto = new ArrayList<>();
-        for (OrderLine orderLines : orderLine) {
-            orderLinesDto.add(fromOrderLineToOrderLinesDto(orderLines));
+    public List<OrderLineResponseDto> fromOrderLinesToOrderLineResponseDto(List<OrderLine> orderLines) {
+        List<OrderLineResponseDto> result = new ArrayList<>();
+        for (OrderLine orderLine : orderLines) {
+            result.add(fromOrderLineToOrderLineResponseDto(orderLine));
         }
-        return orderLinesDto;
+        return result;
     }
+
+
 }
