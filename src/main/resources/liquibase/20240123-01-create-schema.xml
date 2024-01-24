@@ -6,8 +6,8 @@
     <changeSet id="initial" author="tvonck">
         <createSequence sequenceName="transaction_id_seq" cacheSize="10"/>
 
-        <createTable tableName="transaction">
-            <column name="id" type="BIGINT">
+        <createTable tableName="transaction" >
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="amount" type="DECIMAL(10,2)">
@@ -24,7 +24,7 @@
     <changeSet id="02" author="tvonck">
         <createSequence sequenceName="order_line_id_seq" cacheSize="10"/>
         <createTable tableName="order_line">
-            <column name="id" type="BIGINT">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="transaction_id" type="BIGINT">

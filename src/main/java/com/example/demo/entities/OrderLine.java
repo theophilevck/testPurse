@@ -22,6 +22,9 @@ public class OrderLine {
     @Column("id")
     private Long id;
 
+    @Column("transaction_id")
+    private Long transactionId;
+
     @Column("product_name")
     private String productName;
 
@@ -32,5 +35,5 @@ public class OrderLine {
     private int quantity;
 
     @Column("price")
-    private BigDecimal price;
+    private float price;
 }

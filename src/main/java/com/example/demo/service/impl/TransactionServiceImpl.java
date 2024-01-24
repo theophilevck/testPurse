@@ -3,14 +3,21 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.TransactionDto;
 import com.example.demo.dto.TransactionResponseDto;
+import com.example.demo.entities.OrderLine;
 import com.example.demo.entities.StatusEnum;
 import com.example.demo.entities.Transaction;
+import com.example.demo.repository.OrderLineRepository;
 import com.example.demo.repository.TransactionRepository;
 import com.example.demo.service.TransactionService;
+import com.example.demo.web.mapper.OrderLine.OrderLineMapper;
 import com.example.demo.web.mapper.Transaction.TransactionMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,15 +25,37 @@ public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
+    private final OrderLineRepository orderLineRepository;
+    private final OrderLineMapper orderLineMapper;
+    private final DatabaseClient databaseClient;
 
 
     @Override
-    public Mono<Void> createTransaction(TransactionDto saveTransactionRequestDto) {
-        return Mono.just(transactionMapper.fromTransactionDtoToTransaction(saveTransactionRequestDto))
-                .map(transactionRepository::save)
-                .doOnError(throwable -> Mono.error(new RuntimeException("Transaction not saved")))
-                .then();
+    public Mono<TransactionResponseDto> createTransaction(TransactionDto transactionDto) {
+        Transaction transaction = transactionMapper.fromTransactionDtoToTransactionCreation(transactionDto);
+        String nextValQuery = "CALL NEXT VALUE FOR transaction_id_seq";
+
+        return databaseClient.sql(nextValQuery)
+                .map(row -> row.get(0, Long.class))
+                .one()
+                .doOnNext(transaction::setId)
+                .then(transactionRepository.save(transaction))
+                .flatMap(savedTransaction -> {
+                    List<Mono<OrderLine>> orderLineMonos = transactionDto.getOrders().stream()
+                            .map(orderLineDto -> {
+                                OrderLine orderLine = orderLineMapper.fromOrderLineDtoToOrderLine(orderLineDto);
+                                orderLine.setTransactionId(savedTransaction.getId());
+                                return orderLineRepository.save(orderLine);
+                            })
+                            .collect(Collectors.toList());
+
+                    return Mono.when(orderLineMonos)
+                            .thenReturn(savedTransaction);
+                })
+                .map(transactionMapper::fromTransactionToTransactionResultDto);
     }
+
+
 
     @Override
     public Mono<TransactionResponseDto> retrieveTransaction(String TransactionId) {

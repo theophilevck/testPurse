@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class TransactionResponseDto {
 
-    private BigDecimal amount;
+    private float amount;
     private PaymentTypeEnum paymentType;
     private StatusEnum status;
     private List<OrderLineResponseDto> orders;

@@ -35,7 +35,7 @@ public class OrderLineMapper {
         OrderLineResponseDto orderLineResponseDto = new OrderLineResponseDto();
         orderLineResponseDto.setProductName(orderLine.getProductName());
         orderLineResponseDto.setProductReference(orderLine.getProductReference());
-        orderLineResponseDto.setQuantity(BigDecimal.valueOf(orderLine.getQuantity()));
+        orderLineResponseDto.setQuantity(orderLine.getQuantity());
         orderLineResponseDto.setPrice(orderLine.getPrice());
         return orderLineResponseDto;
     }

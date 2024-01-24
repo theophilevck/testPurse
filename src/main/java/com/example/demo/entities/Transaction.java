@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,14 +18,15 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table("transaction")
 public class Transaction {
-
 
     @Id
     @Column("id")
     private Long id;
 
-    private BigDecimal amount;
+    @Column("amount")
+    private float amount;
 
     @Column("payment_type")
     private PaymentTypeEnum paymentType;
@@ -31,7 +34,7 @@ public class Transaction {
     @Column("status")
     private StatusEnum status;
 
+    @Transient
     private List<OrderLine> orders;
-
 
 }

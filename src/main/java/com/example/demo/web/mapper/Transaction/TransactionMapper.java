@@ -2,6 +2,7 @@ package com.example.demo.web.mapper.Transaction;
 
 import com.example.demo.dto.TransactionDto;
 import com.example.demo.dto.TransactionResponseDto;
+import com.example.demo.entities.StatusEnum;
 import com.example.demo.entities.Transaction;
 import com.example.demo.web.mapper.OrderLine.OrderLineMapper;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Component;
 public class TransactionMapper {
 
     private final OrderLineMapper orderLineMapper;
-
 
 
     public TransactionResponseDto fromTransactionToTransactionResultDto(Transaction transaction) {
@@ -35,9 +35,19 @@ public class TransactionMapper {
         return transaction;
     }
 
+    public Transaction fromTransactionDtoToTransactionCreation(TransactionDto transactionDto) {
+        Transaction transaction = new Transaction();
+        transaction.setId(transactionDto.getId());
+        transaction.setAmount(transactionDto.getAmount());
+        transaction.setPaymentType(transactionDto.getPaymentType());
+        transaction.setStatus(StatusEnum.IN_PROGRESS);
+        transaction.setOrders(orderLineMapper.fromOrderLineDtoToOrderLines(transactionDto.getOrders()));
+        return transaction;
+    }
+
 
     public Transaction updateTransactionMapper(TransactionDto transactionDto, Transaction transaction) {
-        if (transactionDto.getAmount() != null) transaction.setAmount(transactionDto.getAmount());
+        if (transactionDto.getAmount() != 0) transaction.setAmount(transactionDto.getAmount());
         if (transactionDto.getPaymentType() != null) transaction.setPaymentType(transactionDto.getPaymentType());
         if (transactionDto.getStatus() != null) transaction.setStatus(transactionDto.getStatus());
         if (transactionDto.getOrders() != null)

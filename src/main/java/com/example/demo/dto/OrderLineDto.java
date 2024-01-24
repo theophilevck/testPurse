@@ -9,6 +9,6 @@ public class OrderLineDto {
     private Long id;
     private String productName;
     private String productReference;
-    private BigDecimal quantity;
-    private BigDecimal price;
+    private Integer quantity;
+    private float price;
 }
