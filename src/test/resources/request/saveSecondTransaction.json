@@ -1,0 +1,12 @@
+{
+  "amount": 208,
+  "payment_type": "PAYPAL",
+  "orders": [
+    {
+      "productName": "vélo  jaune",
+      "productReference": "vélo",
+      "quantity": 1,
+      "price": 208
+    }
+  ]
+}

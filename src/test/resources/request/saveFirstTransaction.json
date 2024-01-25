@@ -1,0 +1,18 @@
+{
+  "amount": 54.8,
+  "payment_type": "CREDIT_CARD",
+  "orders": [
+    {
+      "productName": "gants de ski",
+      "productReference": "gants de ski",
+      "quantity": 4,
+      "price": 10.0
+    },
+    {
+      "productName": "bonet",
+      "productReference": "bonet",
+      "quantity": 1,
+      "price": 14.8
+    }
+  ]
+}

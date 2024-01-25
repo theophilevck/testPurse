@@ -14,6 +14,7 @@ import com.example.demo.web.mapper.Transaction.TransactionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -58,8 +59,16 @@ public class TransactionServiceImpl implements TransactionService {
 
 
     @Override
-    public Mono<TransactionResponseDto> retrieveTransaction(String TransactionId) {
-        return transactionRepository.findById(Long.valueOf(TransactionId))
+    public Flux<TransactionResponseDto> retrieveAllTransaction() {
+        return transactionRepository.findAll()
+                .flatMap(transaction ->
+                        orderLineRepository.findByTransactionId(transaction.getId())
+                                .collectList()
+                                .map(orderLines -> {
+                                    transaction.setOrders(orderLines);
+                                    return transaction;
+                                })
+                )
                 .map(transactionMapper::fromTransactionToTransactionResultDto)
                 .doOnError(throwable -> Mono.error(new RuntimeException("Transaction not found")));
     }

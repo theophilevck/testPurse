@@ -1,0 +1,13 @@
+{
+  "amount": 208.0,
+  "paymentType": "PAYPAL",
+  "status": "IN_PROGRESS",
+  "orders": [
+    {
+      "productName": "vélo  jaune",
+      "productReference": "vélo",
+      "quantity": 1,
+      "price": 208.0
+    }
+  ]
+}

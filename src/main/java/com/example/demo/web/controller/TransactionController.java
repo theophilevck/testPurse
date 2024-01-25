@@ -10,10 +10,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Validated
@@ -39,9 +41,9 @@ public class TransactionController {
         return transactionService.updateTransaction(updateTransactionRequestDto);
     }
 
-    @PostMapping("/retrieve")
+    @GetMapping("/retrieveAll")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "retrieve Transaction")})
-    public Mono<TransactionResponseDto> retrieveTransaction(@Valid @RequestBody String transactionId) {
-        return transactionService.retrieveTransaction(transactionId);
+    public Flux<TransactionResponseDto> retrieveTransaction() {
+        return transactionService.retrieveAllTransaction();
     }
 }
